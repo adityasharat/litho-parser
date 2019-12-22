@@ -1,6 +1,5 @@
 package com.facebook.litho.parser.sample;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,10 +9,13 @@ import android.view.ViewGroup;
 import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
-import com.facebook.litho.widget.Text;
-import com.facebook.yoga.YogaEdge;
+import com.facebook.litho.parser.Property;
+import com.facebook.litho.parser.TextComponentBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -40,14 +42,36 @@ public class MainActivity extends AppCompatActivity {
 
     ViewGroup container = findViewById(R.id.content_main);
     ComponentContext c = new ComponentContext(this);
-    Component component =
-        Text.create(c)
-            .text("Hello World")
-            .textSizeSp(18)
-            .marginDip(YogaEdge.ALL, 4)
-            .backgroundColor(Color.GRAY)
-            .build();
 
+    TextComponentBuilder builder = new TextComponentBuilder();
+    Set<Property<String, String>> properties = new HashSet<>(2);
+    properties.add(
+        new Property<String, String>() {
+          @Override
+          public String name() {
+            return "text";
+          }
+
+          @Override
+          public String value() {
+            return "Hello World!";
+          }
+        });
+
+    properties.add(
+        new Property<String, String>() {
+          @Override
+          public String name() {
+            return "textSizeSp";
+          }
+
+          @Override
+          public String value() {
+            return "18";
+          }
+        });
+
+    Component component = builder.create(c, properties);
     container.addView(LithoView.create(c, component));
   }
 
