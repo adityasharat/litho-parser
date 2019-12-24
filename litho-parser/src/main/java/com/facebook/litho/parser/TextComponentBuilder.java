@@ -1,5 +1,8 @@
 package com.facebook.litho.parser;
 
+import android.graphics.Color;
+import android.text.Layout;
+
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.widget.Text;
 
@@ -17,6 +20,18 @@ public class TextComponentBuilder implements ComponentBuilder<Text, String, Stri
           break;
         case "textSizeSp":
           builder.textSizeSp(Float.parseFloat(p.value()));
+          break;
+        case "textSizeDip":
+          builder.textSizeDip(Float.parseFloat(p.value()));
+          break;
+        case "textSizePx":
+          builder.textSizePx(Integer.parseInt(p.value()));
+          break;
+        case "textColor":
+          builder.textColor(Color.parseColor(p.value()));
+          break;
+        case "textAlignment":
+          builder.textAlignment(Layout.Alignment.valueOf(p.value()));
           break;
       }
     }
